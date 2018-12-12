@@ -12,6 +12,11 @@
 
 const NativeModules = require('NativeModules');
 
+type PlatformSelectSpec<A, I> = {|
+  +android: A,
+  +ios: I,
+|};
+
 const Platform = {
   OS: 'ios',
   get Version() {
@@ -39,7 +44,7 @@ const Platform = {
     }
     return false;
   },
-  select: (obj: Object) => ('ios' in obj ? obj.ios : obj.default),
+  select: <A, I>(obj: PlatformSelectSpec<A, I>): I => obj.ios,
 };
 
 module.exports = Platform;

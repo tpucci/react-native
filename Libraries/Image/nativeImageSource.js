@@ -47,7 +47,10 @@ type NativeImageSourceSpec = {|
  *
  */
 function nativeImageSource(spec: NativeImageSourceSpec): Object {
-  let uri = Platform.select(spec);
+  let uri = Platform.select({
+    android: spec.android || null,
+    ios: spec.ios || null,
+  });
   if (uri == null) {
     console.warn(
       'nativeImageSource(...): No image name supplied for `%s`:\n%s',

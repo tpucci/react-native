@@ -12,6 +12,11 @@
 
 const NativeModules = require('NativeModules');
 
+type PlatformSelectSpec<A, I> = {|
+  +android: A,
+  +ios: I,
+|};
+
 const Platform = {
   OS: 'android',
   get Version() {
@@ -29,7 +34,7 @@ const Platform = {
     const constants = NativeModules.PlatformConstants;
     return constants && constants.uiMode === 'tv';
   },
-  select: (obj: Object) => ('android' in obj ? obj.android : obj.default),
+  select: <A, I>(obj: PlatformSelectSpec<A, I>): A => obj.android,
 };
 
 module.exports = Platform;
